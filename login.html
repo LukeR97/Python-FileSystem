@@ -1,0 +1,43 @@
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>Logged Out</title>
+        <link type="text/css" rel="stylesheet" href="/css/stylesheet.css"/>
+    </head>
+    <body>
+        <div name="navBar">
+            <ul>
+                <div class="loginButton">
+                    <li><a href="{{ loginUrl }}">Login</a></li>
+                </div>
+            </ul>
+        </div>
+        <div id="instructioncontent">
+            <h1>Instructions</h1>
+            <br/>
+            <br/>
+            <h2>Directories</h2>
+            <p>Type in your desired directory name in the add directory
+                box. Then press Submit. This will add a directory to your
+                current directory
+            </p>
+            <br/>
+            <h2>Files</h2>
+            <p>Click on the add file button and select the file you want
+                to upload. This will be confirmed by the success message.
+                You can then press submit and this will add a file to your
+                current directory. If you try to add duplicate files or directories,
+                Nothing will happen, but the duplicate will not be added.
+            </p>
+            <br/>
+            <h2>Deleting & Moving</h2>
+            <p>To delete a file, simply press the red delete button. To delete
+                a directory, you must first ensure that this directory is empty.
+                Delete any files or other directories located inside it first.
+                To move to another directory, double click on the name of the
+                directory and you will move to it. To move back up to the parent,
+                click on the <b>../</b> and you will return to the parent.
+            </p>
+        </div>
+    </body>
+</html>

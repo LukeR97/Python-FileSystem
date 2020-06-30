@@ -1,0 +1,107 @@
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>Logged In</title>
+        <link type="text/css" rel="stylesheet" href="/css/stylesheet.css"/>
+    </head>
+        <div name="navBar">
+            <ul>
+                <li id="logout"><a href="{{ logoutUrl }}">Logout</a></li>
+                <li id="user">{{ user.email() }}</li>
+                <form method="post" action="/">
+                    <input type="hidden" name="button" value="home">
+                    <button id="homebtn">Home</button>
+                </form>
+            </ul>
+        </div>
+        <div class="content">
+            <ul id="diraddlist">
+                <form action="/ "method="post">
+                    <li>
+                        <input type="text" class="input" name="dirname" placeholder="Add directory"/>
+                    </li>
+                    <button type="submit" class="subbtn" name="button" value="add">Submit</button>
+                </form>
+            </ul>
+            <ul id="fileuploadlist">
+                <form action="{{ uploadUrl }}" method="post" enctype="multipart/form-data">
+                    <li>
+                        <input type="file" name="file" id="upload" class="inputfile">
+                        <label id="labelChange" for="upload">Upload a file</label>
+                    </li>
+                    <button type="submit" class="subbtn" value="Upload">Submit</button>
+                </form>
+            </ul>
+            <table>
+                {% if isRootFalse %}
+                <tr>
+                    <th>Your Current Path</th>
+                    <th colspan="2">{{ currentPath }}</th>
+                    <th>
+                        <form method="post" action="/">
+                            <button type="submit" name="button" class="updir" value="parent">../</button>
+                        </form>
+                    </th>
+                </tr>
+                {% else %}
+                <tr>
+                    <th>Your Current Path</th>
+                    <th colspan="3">{{ currentPath }}</th>
+                </tr>
+                {% endif %}
+                {% if directories %}
+                {% for directory in directories %}
+                <tr class="data">
+                    <td class="tabledata">
+                        <a href="/?dirname={{ directory }}">Directory</a>
+                    </td>
+                    <td class="tabledata" colspan="2">
+                        <a href="/?dirname={{ directory }}" class="tablelist">{{ directory }}</a>
+                    </td>
+                    <td>
+                        <form method="post" action="/">
+                            <input type="hidden" name="name" value="{{ directory }}"/>
+                            <input type="hidden" name="type" value="directory"/>
+                            <button type="submit" name="button" class="deletebtn" value="delete">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+                {% endif %}
+                {% if files %}
+                {% for file in files %}
+                <tr class="data">
+                    <td class="listoffiles">
+                        <a href="/download?fileName={{ file }}">Files In This Directory</a>
+                    </td>
+                    <td class="listoffiles" colspan="2">
+                        <a href="/download?fileName={{ file }}" class="tablelist"><b>{{ file }}</b>
+                        <br/>
+                        <!--File type goes here -->
+                        File Type is {{ file.split(".")[1] }}
+                        <br/>
+                        File Size is {{ fileSize[loop.index-1] }} bytes
+                        <br/>
+                        Created Date: {{ createdAt[loop.index-1] }}</a>
+                    </td>
+                    <td>
+                        <form method="post" action="/">
+                            <input type="hidden" name="name" value="{{ file }}"/>
+                            <input type="hidden" name="type" value="file"/>
+                            <button type="submit" name="button" class="deletebtn" value="delete">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+                {% endif %}
+            </table>
+        </div>
+    </body>
+    <script>
+        var fileField = document.getElementById('upload').addEventListener("click", function(){
+            var success = "File Ready for Submission";
+            var toChange = document.getElementById('labelChange');
+            toChange.innerHTML = success;
+        });
+    </script>
+</html>
